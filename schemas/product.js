@@ -74,7 +74,7 @@ export default {
       name: "tags",
       type: "tags",
       title: "Tags",
-      description: "The categories that this product belongs to"
+      description: "The tags that this product belongs to"
     },
     {
       name: "sale",
