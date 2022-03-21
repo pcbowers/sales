@@ -38,7 +38,6 @@ You can also slice for pagination using the `0...10` syntax (10 is an example, y
 ```
 *[_type == "product" && sale->_id == 'MY_ID'][] | order(price asc) {
   ...,
-  "tags": tags[].value,
   "images": images[].asset->url
 }
 ```
@@ -48,7 +47,6 @@ You can also slice for pagination using the `0...10` syntax (10 is an example, y
 ```
 *[_type == "product" && "TAG" in tags[].value][] {
   ...,
-  "tags": tags[].value,
   "images": images[].asset->url
 }
 ```
@@ -58,7 +56,6 @@ You can also slice for pagination using the `0...10` syntax (10 is an example, y
 ```
 *[_type == "product" && [name, description] match "*SEARCH*"][] {
   ...,
-  "tags": tags[].value,
   "images": images[].asset->url
 }
 ```
@@ -68,5 +65,5 @@ You can also slice for pagination using the `0...10` syntax (10 is an example, y
 This is not distinct! Make sure to filter first.
 
 ```
-*[_type == "product" && count(tags) > 0].tags[].value
+*[_type == "product" && count(tags) > 0].tags[]
 ```
