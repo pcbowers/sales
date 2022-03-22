@@ -158,7 +158,7 @@
 				callback={paginate}
 			/>
 		{:else}
-			<div class="text-center italic font-medium text-lg">No Products Found</div>
+			<div class="text-center italic font-medium text-lg mt-2">No Products Found</div>
 		{/if}
 	</div>
 </div>
