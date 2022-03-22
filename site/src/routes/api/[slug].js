@@ -35,7 +35,6 @@ export async function get({ params, url }) {
 			search: `*${search}*`,
 			tag
 		});
-		console.log(Math.min(total, start + pageSize));
 
 		if (start > total) {
 			if (total > pageSize) start = total - pageSize;
