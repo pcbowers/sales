@@ -8,14 +8,14 @@ const saleQuery = `
 }
 `;
 
-export async function get({ params }) {
+export async function get({ params, url }) {
 	const { slug } = params;
 
 	const sale = await client.fetch(saleQuery, {
 		sale: slug
 	});
 
-	const productsFetch = await fetch(`http://localhost:3000/api/${slug}?start=1`);
+	const productsFetch = await fetch(`${url.origin}/api/${slug}?start=1`);
 
 	const products = await productsFetch.json();
 
