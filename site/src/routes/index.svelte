@@ -23,7 +23,7 @@
 	<title>Sales</title>
 </svelte:head>
 
-<div class="mt-5 max-w-lg m-auto">
+<div class="mt-5 max-w-lg m-auto p-2">
 	<h1 class="text-5xl font-bold text-center mb-5">Sales</h1>
 	<div class="text-lg font-mediuum text-center mb-5">
 		Browse all active sales below. Use the search bar above to filter.

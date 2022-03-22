@@ -73,7 +73,7 @@
 	<title>{sale.name}</title>
 </svelte:head>
 
-<div class="mt-5 max-w-2xl m-auto">
+<div class="mt-5 max-w-2xl m-auto p-2">
 	<h1 class="text-5xl font-bold text-center mb-5">{sale.name}</h1>
 	<div class="text-lg font-mediuum text-center mb-5">{sale.description}</div>
 	<div class="flex justify-center gap-2 mb-5">
@@ -158,7 +158,7 @@
 				callback={paginate}
 			/>
 		{:else}
-			<div class="text-center italic font-medium text-lg">No Sales Found</div>
+			<div class="text-center italic font-medium text-lg">No Products Found</div>
 		{/if}
 	</div>
 </div>
