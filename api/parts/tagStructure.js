@@ -16,9 +16,6 @@ export default (saleId = false) =>
     map((tags) => {
       const flattenedTags = tags.flat(Infinity)
 
-      console.log(saleId)
-      console.log(tags)
-
       const uniqueTags = flattenedTags.filter((value, index) => {
         const _value = JSON.stringify(value)
         return (

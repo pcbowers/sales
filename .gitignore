@@ -9,4 +9,17 @@
 node_modules
 
 # Compiled sanity studio
-/dist
+api/dist
+
+.DS_Store
+
+# Svelte site
+site/build
+site/.svelte-kit
+site/package
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
