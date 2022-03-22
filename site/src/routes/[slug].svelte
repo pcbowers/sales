@@ -146,7 +146,7 @@
 		{#if products && products.length}
 			<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 my-5">
 				{#each products as product}
-					<Product {product} currency={sale.currency} />
+					<Product {product} currency={sale.currency} email={sale.email} saleName={sale.name} />
 				{/each}
 			</div>
 

@@ -3,6 +3,8 @@
 
 	export let product;
 	export let currency;
+	export let email;
+	export let saleName;
 	let cover = true;
 
 	let options = {
@@ -92,8 +94,25 @@
 				}).format(product.price)}</span
 			>
 			<span class="dark:text-white text-gray-900 font-medium text-lg text-center "
-				>{product.quantity - product.totalPurchased}/{product.quantity} Left</span
+				>{product.quantity - product.totalPurchased} of {product.quantity} Left</span
 			>
 		</div>
+		<a
+			href={`mailto:${email}?subject=${encodeURI(`${saleName} | ${product.name}`)}&body=${encodeURI(
+				`Hello,\n\nI am interested in purchasing ${product.name} (Product ID: '${product._id}'). Is ${product.name} still available for purchase?`
+			)}`}
+			class="inline-flex items-center justify-center gap-2 w-full mt-3 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+		>
+			<svg
+				class="w-6 h-6"
+				fill="currentColor"
+				viewBox="0 0 20 20"
+				xmlns="http://www.w3.org/2000/svg"
+				><path
+					d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
+				/></svg
+			>
+			Email About Product
+		</a>
 	</div>
 </div>
