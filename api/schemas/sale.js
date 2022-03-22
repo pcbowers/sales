@@ -15,6 +15,13 @@ export default {
   ),
   fields: [
     {
+      name: "active",
+      type: "boolean",
+      title: "Active",
+      description: "The current status of the sale",
+      initialValue: true
+    },
+    {
       name: "name",
       type: "string",
       title: "Name",

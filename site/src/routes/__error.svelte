@@ -4,16 +4,16 @@
 		return {
 			props: {
 				status,
-				message: error.message,
-				title: `${status}: ${error.message}`
+				message: error.message
 			}
 		};
 	}
 </script>
 
 <script>
-	export let title;
+	export let status;
+	export let message;
 </script>
 
-<h1 class="mt-5 text-center font-bold text-5xl">This page does not exist</h1>
-<div class="mt-5 text-sm text-center">{title}</div>
+<h1 class="mt-5 text-center font-bold text-5xl">{message}</h1>
+<div class="mt-5 text-sm text-center">Error Code <strong>{status}</strong></div>

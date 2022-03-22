@@ -8,24 +8,47 @@ const saleQuery = `
 }
 `;
 
+const tagQuery = `
+*[_type == "product" && count(tags) > 0 && sale->slug.current == $sale].tags[]
+`;
+
 export async function get({ params, url }) {
-	const { slug } = params;
+	try {
+		const { slug } = params;
 
-	const sale = await client.fetch(saleQuery, {
-		sale: slug
-	});
+		const sale = await client.fetch(saleQuery, {
+			sale: slug
+		});
 
-	const productsFetch = await fetch(`${url.origin}/api/${slug}?start=1`);
+		const productsFetch = await fetch(`${url.origin}/api/${slug}?start=1`);
 
-	const products = await productsFetch.json();
+		const products = await productsFetch.json();
 
-	if (sale) {
+		const tags = await client.fetch(tagQuery, {
+			sale: slug
+		});
+
+		if (!sale) throw Error('This sale does not exist');
+
 		return {
-			body: { sale: sale, ...products }
+			status: 200,
+			body: {
+				sale: sale,
+				...products,
+				tags: tags.filter((value, index) => {
+					const _value = JSON.stringify(value);
+					return (
+						index ===
+						tags.findIndex((obj) => {
+							return JSON.stringify(obj) === _value;
+						})
+					);
+				})
+			}
+		};
+	} catch (error) {
+		return {
+			status: 404
 		};
 	}
-
-	return {
-		status: 404
-	};
 }

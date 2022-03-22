@@ -35,6 +35,7 @@
   "type": "module",
   "dependencies": {
     "@sanity/client": "^3.2.2",
+    "@splidejs/svelte-splide": "^0.1.18",
     "mini-svg-data-uri": "^1.4.4"
   }
 }
