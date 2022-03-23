@@ -130,7 +130,7 @@
 	</div>
 
 	{#if fields && fields.length}
-		<div class="flex flex-row justify-center items-center gap-2 mb-2">
+		<div class="flex flex-row justify-center items-center gap-2 mb-4 flex-wrap">
 			{#each fields as field}
 				<Order
 					{field}
@@ -144,7 +144,7 @@
 	{/if}
 
 	{#if tags && tags.length}
-		<div class="flex flex-row justify-center items-center gap-2">
+		<div class="flex flex-row justify-center items-center gap-2 flex-wrap">
 			{#each tags as tag}
 				<Tag
 					{tag}
