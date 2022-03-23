@@ -9,19 +9,21 @@ const saleQuery = `
 `;
 
 export async function get({ url }) {
-	const search = url.searchParams.get('search') || '';
+	try {
+		const search = url.searchParams.get('search') || '';
 
-	const sales = await client.fetch(saleQuery, {
-		search: `*${search ? search : ''}*`
-	});
+		const sales = await client.fetch(saleQuery, {
+			search: `*${search ? search : ''}*`
+		});
 
-	if (sales) {
+		if (sales) {
+			return {
+				body: { sales }
+			};
+		}
+	} catch (error) {
 		return {
-			body: { sales }
+			status: 404
 		};
 	}
-
-	return {
-		status: 404
-	};
 }

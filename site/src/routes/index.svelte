@@ -1,6 +1,9 @@
 <script>
 	import { page } from '$app/stores';
 	import { search } from '$lib/stores';
+	import { onMount } from 'svelte';
+
+	onMount(() => search.set(''));
 
 	import Sale from '$lib/components/Sale.svelte';
 	export let sales;

@@ -34,7 +34,7 @@
 	];
 </script>
 
-<div class="max-w-sm bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 m-auto">
+<div class="bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
 	<div class="rounded-t-lg overflow-hidden mb-2 relative">
 		<div
 			class="absolute z-50 p-2 right-0 top-0 group cursor-pointer"
@@ -72,7 +72,7 @@
 		</h5>
 		{#if product.tags}
 			<div class="flex items-center gap-2 mt-2.5 mb-5">
-				{#each product.tags as tag, index}
+				{#each product.tags as tag}
 					<span
 						class={`text-xs font-semibold px-2 py-0.5 rounded ${
 							colors[Math.floor(Math.random() * colors.length)]
@@ -82,7 +82,7 @@
 			</div>
 		{/if}
 		{#if product.description}
-			<p class="my-5">{product.description}</p>
+			<p class="my-5">{@html product.description.replace(/\r?\n/g, '<br />')}</p>
 		{:else}
 			<p class="my-5">{product.name}</p>
 		{/if}

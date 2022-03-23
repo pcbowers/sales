@@ -1,17 +1,19 @@
 <script>
 	import { theme } from '$lib/stores';
 	import { browser } from '$app/env';
-
-	export let search;
+	import { search } from '$lib/stores';
 
 	let timer;
+	let value;
 
 	const debounce = (e) => {
 		clearTimeout(timer);
 		timer = setTimeout(() => {
-			search = e.target.value;
+			search.set(e.target.value);
 		}, 100);
 	};
+
+	$: if ($search === '') value = '';
 
 	$: {
 		if (browser) {
@@ -26,7 +28,7 @@
 	class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-600"
 >
 	<div class="container flex flex-wrap justify-end items-center mx-auto gap-2">
-		<a href="/" rel="external" class="flex flex-1 items-center justify-start gap-2">
+		<a href="/" class="flex flex-1 items-center justify-start gap-2">
 			<svg
 				class="w-12 h-12 dark:text-white"
 				fill="currentColor"
@@ -124,6 +126,7 @@
 						<input
 							type="text"
 							id="search"
+							bind:value
 							on:input={debounce}
 							class="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 							placeholder="Search..."

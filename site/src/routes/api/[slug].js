@@ -1,16 +1,20 @@
 import client from '$lib/sanity';
 
-const productQuery = (field = 'name', direction = 'asc') => `
-*[_type == "product" && totalPurchased != quantity && sale->slug.current == $sale && ([name, description, price] match $search || tags[].label match $search) && ($tag in tags[].value || $tag == '')]| order(${field} ${
-	direction === 'desc' ? 'desc' : 'asc'
-}) [$start...$finish] {
+const productQuery = (field = 'name', direction = 'asc', tags = []) => `
+*[_type == "product" && totalPurchased != quantity && sale->slug.current == $sale && ([name, description, price] match $search || tags[].label match $search) ${tags
+	.filter((tag) => !!tag)
+	.map((tag) => `&& '${tag}' in tags[].value `)
+	.join('')}]| order(${field} ${direction === 'desc' ? 'desc' : 'asc'}) [$start...$finish] {
   ...,
   "images": images[].asset->url,
 }
 `;
 
-const totalProductQuery = `
-count(*[_type == "product" && totalPurchased != quantity && sale->slug.current == $sale && ([name, description, price] match $search || tags[].label match $search) && ($tag in tags[].value || $tag == '')])
+const totalProductQuery = (tags = []) => `
+count(*[_type == "product" && totalPurchased != quantity && sale->slug.current == $sale && ([name, description, price] match $search || tags[].label match $search) ${tags
+	.filter((tag) => !!tag)
+	.map((tag) => `&& '${tag}' in tags[].value `)
+	.join('')}])
 `;
 
 const MAX = 100;
@@ -25,15 +29,16 @@ export async function get({ params, url }) {
 		const sort = url.searchParams.get('sort') || 'name';
 		const direction = url.searchParams.get('direction') || 'asc';
 		const search = url.searchParams.get('search') || '';
-		const tag = url.searchParams.get('tag') || '';
+		const tags = url.searchParams.getAll('tags') || [];
 		const pageSize = Math.min(MAX, Number(url.searchParams.get('pageSize') || DEFAULT_SIZE));
 
 		if (start < 1) start = 1;
 
-		const total = await client.fetch(totalProductQuery, {
+		console.log(totalProductQuery(tags));
+
+		const total = await client.fetch(totalProductQuery(tags), {
 			sale: slug,
-			search: `*${search}*`,
-			tag
+			search: `*${search}*`
 		});
 
 		if (start > total) {
@@ -41,10 +46,9 @@ export async function get({ params, url }) {
 			else start = 1;
 		}
 
-		const products = await client.fetch(productQuery(sort, direction), {
+		const products = await client.fetch(productQuery(sort, direction, tags), {
 			sale: slug,
 			search: `*${search}*`,
-			tag,
 			start: start - 1,
 			finish: Math.min(total, start + pageSize - 1)
 		});

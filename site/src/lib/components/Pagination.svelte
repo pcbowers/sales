@@ -18,7 +18,7 @@
 	$: disableNext = finish === total;
 </script>
 
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center my-5">
 	<span class="text-sm text-gray-700 dark:text-gray-400">
 		Products <span class="font-semibold text-gray-900 dark:text-white">{start}</span>
 		to

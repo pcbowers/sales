@@ -1,6 +1,9 @@
 <script>
+	import Masonry from 'svelte-bricks';
+
 	import { page } from '$app/stores';
 	import { search } from '$lib/stores';
+	import { onMount } from 'svelte';
 
 	import Product from '$lib/components/Product.svelte';
 	import Pagination from '$lib/components/Pagination.svelte';
@@ -11,6 +14,8 @@
 	export let products;
 	export let meta;
 	export let tags;
+
+	onMount(() => search.set(''));
 
 	let colors = [
 		'bg-blue-100 text-blue-800 dark:bg-blue-200',
@@ -28,16 +33,16 @@
 	let selectedField = 'name';
 	let direction = 'asc';
 
-	let selectedTag = '';
+	let selectedTags = [];
 
 	const paginate = async (start = 1) => {
 		const data = await (
 			await fetch(
 				`${$page.url.origin}/api/${
 					$page.params.slug
-				}?start=${start}&sort=${selectedField}&direction=${direction}&tag=${selectedTag}&${
-					$search ? `&search=${$search}` : ''
-				}`
+				}?start=${start}&sort=${selectedField}&direction=${direction}&tags=${selectedTags.join(
+					'&tags='
+				)}&${$search ? `&search=${$search}` : ''}`
 			)
 		).json();
 
@@ -54,7 +59,11 @@
 	});
 
 	const updateTag = async (tagValue) => {
-		selectedTag = tagValue === selectedTag ? '' : tagValue;
+		if (selectedTags.includes(tagValue))
+			selectedTags = selectedTags.filter((tag) => tag !== tagValue);
+		else selectedTags = [...selectedTags, tagValue];
+
+		console.log(selectedTags);
 		await paginate();
 	};
 
@@ -73,9 +82,14 @@
 	<title>{sale.name}</title>
 </svelte:head>
 
-<div class="mt-5 max-w-2xl m-auto p-2">
-	<h1 class="text-5xl font-bold text-center mb-5">{sale.name}</h1>
-	<div class="text-lg font-mediuum text-center mb-5">{sale.description}</div>
+<div class="mt-5 max-w-5xl m-auto p-2">
+	<div class="flex flex-col justify-center items-center">
+		<h1 class="text-5xl font-bold text-center mb-5 max-w-xl">{sale.name}</h1>
+		<div class="text-lg font-mediuum text-center mb-5 max-w-xl">
+			{@html sale.description.replace(/\r?\n/g, '<br />')}
+		</div>
+	</div>
+
 	<div class="flex justify-center gap-2 mb-5">
 		<a
 			href={`mailto:${sale.email}`}
@@ -136,19 +150,25 @@
 					{tag}
 					color={colors[Math.floor(Math.random() * colors.length)]}
 					callback={updateTag}
-					selected={tag.value === selectedTag}
+					selected={selectedTags.includes(tag.value)}
 				/>
 			{/each}
 		</div>
 	{/if}
 
-	<div class="mb-5">
+	<div class="my-5 px-3">
 		{#if products && products.length}
-			<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 my-5">
-				{#each products as product}
-					<Product {product} currency={sale.currency} email={sale.email} saleName={sale.name} />
-				{/each}
-			</div>
+			<Pagination
+				start={meta.start}
+				finish={meta.finish}
+				total={meta.total}
+				pageSize={meta.pageSize}
+				callback={paginate}
+			/>
+
+			<Masonry items={products} minColWidth={300} maxColWidth={400} gap={20} let:item>
+				<Product product={item} currency={sale.currency} email={sale.email} saleName={sale.name} />
+			</Masonry>
 
 			<Pagination
 				start={meta.start}

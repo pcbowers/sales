@@ -1,6 +1,4 @@
 <script>
-	import { search } from '$lib/stores';
-
 	import '../app.css';
 	import 'flowbite/dist/flowbite.css';
 	import '@splidejs/splide/dist/css/splide.min.css';
@@ -17,13 +15,15 @@
 		) {
 			document.documentElement.classList.add('dark');
 			document.documentElement.classList.remove('light');
+			localStorage.setItem('color-theme', 'dark');
 		} else {
 			document.documentElement.classList.remove('dark');
 			document.documentElement.classList.add('light');
+			localStorage.setItem('color-theme', 'light');
 		}
 	</script>
 </svelte:head>
 
-<Navbar bind:search={$search} />
+<Navbar />
 
 <slot />
