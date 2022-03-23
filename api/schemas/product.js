@@ -97,13 +97,13 @@ export default {
     },
     prepare(selection) {
       let {
-        title,
-        subtitle,
+        title = "Unknown",
+        subtitle = "Unknown",
         media,
-        currency,
-        description,
-        quantity,
-        totalPurchased
+        currency = "USD",
+        description = "",
+        quantity = 1,
+        totalPurchased = 0
       } = selection
 
       if (description) description = " | " + description
