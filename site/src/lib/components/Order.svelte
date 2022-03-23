@@ -8,7 +8,7 @@
 
 <span
 	on:click={() => callback(field)}
-	class={`text-sm font-medium rounded ${color} flex justify-center items-center transition-all px-3 py-1  ${
+	class={`text-sm font-medium rounded ${color} flex justify-center items-center transition-all px-3 py-1 cursor-pointer ${
 		direction ? 'font-bold' : 'font-medium'
 	}`}
 >
