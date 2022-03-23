@@ -1,14 +1,7 @@
 import S from "@sanity/desk-tool/structure-builder"
 import React from "react"
 
-import documentStore from "part:@sanity/base/datastore/document"
-import { map } from "rxjs/operators"
-
 import tagItems from "./tagStructure"
-
-// Get all an array of all tags defined on all 'post' type
-const query = (saleId = "") =>
-  `*[_type == 'product' && count(tags) > 0 && sale._ref match "*${saleId}*"].tags[]`
 
 export default () =>
   S.list()
@@ -72,6 +65,62 @@ export default () =>
             .child((saleId) => {
               return tagItems(saleId)
             })
+        ),
+      S.listItem()
+        .icon(() => (
+          <svg
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        ))
+        .title("Purchased Products")
+        .child(
+          S.documentTypeList("product")
+            .title("Product")
+            .filter('_type == "product" && quantity <= totalPurchased')
+        ),
+      S.listItem()
+        .icon(() => (
+          <svg
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        ))
+        .title("Available Products")
+        .child(
+          S.documentTypeList("product")
+            .title("Product")
+            .filter('_type == "product" && quantity > totalPurchased')
+        ),
+      S.listItem()
+        .icon(() => (
+          <svg
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"></path>
+          </svg>
+        ))
+        .title("Products Missing Availability")
+        .child(
+          S.documentTypeList("product")
+            .title("Product")
+            .filter('_type == "product" && !(tags[].value match "*availab*")')
         ),
       S.divider(),
       ...S.documentTypeListItems()

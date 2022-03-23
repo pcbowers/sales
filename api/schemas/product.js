@@ -91,13 +91,25 @@ export default {
       subtitle: "price",
       media: "images.0",
       currency: "sale.currency",
+      quantity: "quantity",
+      totalPurchased: "totalPurchased",
       description: "description"
     },
     prepare(selection) {
-      let { title, subtitle, media, currency, description } = selection
+      let {
+        title,
+        subtitle,
+        media,
+        currency,
+        description,
+        quantity,
+        totalPurchased
+      } = selection
 
       if (description) description = " | " + description
       else description = ""
+
+      let left = ` (${quantity - totalPurchased} remaining)`
 
       return {
         title,
@@ -105,7 +117,9 @@ export default {
           new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: currency
-          }).format(subtitle) + description,
+          }).format(subtitle) +
+          left +
+          description,
         media
       }
     }
