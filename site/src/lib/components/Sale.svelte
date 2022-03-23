@@ -1,5 +1,7 @@
 <script>
 	export let sale;
+
+	let description = sale.description.replace(/(<([^>]+)>)/gi, '');
 </script>
 
 <a
@@ -16,9 +18,7 @@
 			{sale.name}
 		</h5>
 		<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
-			{@html sale.description.length > 250
-				? sale.description.substring(0, 250) + '...'
-				: sale.description}
+			{@html description.length > 250 ? description.substring(0, 250) + '...' : description}
 		</p>
 	</div>
 </a>
