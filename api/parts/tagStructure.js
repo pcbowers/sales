@@ -26,12 +26,15 @@ export default (saleId = false) =>
         )
       })
 
+      console.log(uniqueTags)
+
       return S.list()
         .title("Tag")
         .items([
           ...uniqueTags.map((tag) => {
             return S.listItem()
               .title(tag.label)
+              .id(tag.value.replace(/\s/g, "__"))
               .icon(() => (
                 <svg
                   fill="currentColor"
