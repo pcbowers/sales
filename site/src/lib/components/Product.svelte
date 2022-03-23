@@ -99,7 +99,16 @@
 		</div>
 		<a
 			href={`mailto:${email}?subject=${encodeURI(`${saleName} | ${product.name}`)}&body=${encodeURI(
-				`Hello,\n\nI am interested in purchasing ${product.name} (Product ID: '${product._id}'). Is ${product.name} still available for purchase?`
+				`Hello,\n\nI am interested in purchasing the following product:\n\nName: ${
+					product.name
+				}\nID: ${product._id}\nTags: ${product.tags
+					.map((tag) => tag.label)
+					.join(', ')}\nPrice: ${new Intl.NumberFormat('en-US', {
+					style: 'currency',
+					currency
+				}).format(product.price)}\nCurrent Quantity: ${
+					product.quantity - product.totalPurchased
+				} of ${product.quantity} left\n\nIs this still available for purchase?`
 			)}`}
 			class="inline-flex items-center justify-center gap-2 w-full mt-3 text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
 		>

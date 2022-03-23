@@ -83,76 +83,79 @@
 </svelte:head>
 
 <div class="mt-5 max-w-5xl m-auto p-2">
-	<div class="flex flex-col justify-center items-center">
-		<h1 class="text-5xl font-bold text-center mb-5 max-w-xl">{sale.name}</h1>
-		<div class="text-lg font-mediuum text-center mb-5 max-w-xl">
-			{@html sale.description.replace(/\r?\n/g, '<br />')}
-		</div>
-	</div>
-
-	<div class="flex justify-center gap-2 mb-5">
-		<a
-			href={`mailto:${sale.email}`}
-			rel="external"
-			class="inline-flex items-center justify-center gap-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-		>
-			<svg
-				class="w-4 h-4"
-				fill="currentColor"
-				viewBox="0 0 20 20"
-				xmlns="http://www.w3.org/2000/svg"
-				><path
-					fill-rule="evenodd"
-					d="M14.243 5.757a6 6 0 10-.986 9.284 1 1 0 111.087 1.678A8 8 0 1118 10a3 3 0 01-4.8 2.401A4 4 0 1114 10a1 1 0 102 0c0-1.537-.586-3.07-1.757-4.243zM12 10a2 2 0 10-4 0 2 2 0 004 0z"
-					clip-rule="evenodd"
-				/></svg
-			>
-			Email
-		</a>
-		{#if sale.phone}
+	<div class="flex flex-col justify-center items-center mb-10">
+		<h1 class="text-5xl font-bold text-center mb-10 max-w-xl">{sale.name}</h1>
+		<div class="flex justify-center gap-2 mb-5">
 			<a
-				href={`tel:${sale.phone}`}
+				href={`mailto:${sale.email}`}
 				rel="external"
-				class="inline-flex items-center justify-center gap-1 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+				class="inline-flex items-center justify-center gap-1 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
 			>
 				<svg
-					class="w-4 h-4"
+					class="w-6 h-6"
 					fill="currentColor"
 					viewBox="0 0 20 20"
 					xmlns="http://www.w3.org/2000/svg"
 					><path
-						d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+						fill-rule="evenodd"
+						d="M14.243 5.757a6 6 0 10-.986 9.284 1 1 0 111.087 1.678A8 8 0 1118 10a3 3 0 01-4.8 2.401A4 4 0 1114 10a1 1 0 102 0c0-1.537-.586-3.07-1.757-4.243zM12 10a2 2 0 10-4 0 2 2 0 004 0z"
+						clip-rule="evenodd"
 					/></svg
 				>
-				Phone
+				Email
 			</a>
-		{/if}
+			{#if sale.phone}
+				<a
+					href={`tel:${sale.phone}`}
+					rel="external"
+					class="inline-flex items-center justify-center gap-1 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+				>
+					<svg
+						class="w-6 h-6"
+						fill="currentColor"
+						viewBox="0 0 20 20"
+						xmlns="http://www.w3.org/2000/svg"
+						><path
+							d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"
+						/></svg
+					>
+					Phone
+				</a>
+			{/if}
+		</div>
+		<div class="text-lg font-mediuum text-center max-w-xl">
+			{@html sale.description.replace(/\r?\n/g, '<br />')}
+		</div>
 	</div>
 
 	{#if fields && fields.length}
-		<div class="flex flex-row justify-center items-center gap-2 mb-4 flex-wrap">
-			{#each fields as field}
-				<Order
-					{field}
-					color={colors[Math.floor(Math.random() * colors.length)]}
-					callback={updateOrder}
-					{direction}
-					selected={field === selectedField}
-				/>
-			{/each}
+		<div class="flex justify-center">
+			<div class="flex flex-row justify-center max-w-xl items-center gap-2 mb-4 flex-wrap">
+				{#each fields as field}
+					<Order
+						{field}
+						color={colors[Math.floor(Math.random() * colors.length)]}
+						callback={updateOrder}
+						{direction}
+						selected={field === selectedField}
+					/>
+				{/each}
+			</div>
 		</div>
 	{/if}
 
 	{#if tags && tags.length}
-		<div class="flex flex-row justify-center items-center gap-2 flex-wrap">
-			{#each tags as tag}
-				<Tag
-					{tag}
-					color={colors[Math.floor(Math.random() * colors.length)]}
-					callback={updateTag}
-					selected={selectedTags.includes(tag.value)}
-				/>
-			{/each}
+		<div class="flex justify-center">
+			<div class="flex flex-row justify-center items-center gap-2 max-w-xl flex-wrap">
+				{#each tags as tag}
+					<Tag
+						{tag}
+						color={colors[Math.floor(Math.random() * colors.length)]}
+						callback={updateTag}
+						selected={selectedTags.includes(tag.value)}
+					/>
+				{/each}
+			</div>
 		</div>
 	{/if}
 

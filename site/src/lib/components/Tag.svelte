@@ -7,7 +7,7 @@
 
 <span
 	on:click={() => callback(tag.value)}
-	class={`text-sm font-medium rounded ${color} flex justify-center items-center transition-all px-3 py-1 cursor-pointer  ${
+	class={`font-medium rounded ${color} flex justify-center items-center transition-all px-3 gap-1 py-1 cursor-pointer  ${
 		selected ? 'font-bold' : 'font-medium'
 	}`}
 >
