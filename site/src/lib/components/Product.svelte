@@ -71,7 +71,7 @@
 			{product.name}
 		</h5>
 		{#if product.tags}
-			<div class="flex items-center gap-2 mt-2.5 mb-5">
+			<div class="flex items-center gap-2 mt-2.5 mb-5 flex-wrap">
 				{#each product.tags as tag}
 					<span
 						class={`text-xs font-semibold px-2 py-0.5 rounded ${
