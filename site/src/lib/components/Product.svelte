@@ -34,7 +34,7 @@
 	];
 </script>
 
-<div class="bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+<div class="bg-white rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700" id={product.id}>
 	<div class="rounded-t-lg overflow-hidden mb-2 relative">
 		<div
 			class="absolute z-50 p-2 right-0 top-0 group cursor-pointer"

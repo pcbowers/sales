@@ -45,8 +45,7 @@
 				)}&${$search ? `&search=${$search}` : ''}`
 			)
 		).json();
-
-		products = data.products;
+		products = data.products.map((product) => ({ id: product._id, ...product }));
 		meta.total = data.meta.total;
 		meta.start = data.meta.start;
 		meta.finish = data.meta.finish;
