@@ -82,7 +82,9 @@
 			</div>
 		{/if}
 		{#if product.description}
-			<p class="my-5">{@html product.description.replace(/\r?\n/g, '<br />')}</p>
+			<p class="my-5 max-h-[12.75rem] overflow-y-auto pr-1">
+				{@html product.description.replace(/\r?\n/g, '<br />')}
+			</p>
 		{:else}
 			<p class="my-5">{product.name}</p>
 		{/if}
