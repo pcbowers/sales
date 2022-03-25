@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { Splide, SplideSlide } from '@splidejs/svelte-splide';
 
 	export let product;
@@ -7,20 +7,20 @@
 	export let saleName;
 	let cover = true;
 
-	let options = {
+	const options = {
 		autoplay: true,
 		interval: 3000,
 		type: 'loop',
 		speed: 800,
 		start: 1,
-		gap: '2rem',
+		lazyLoad: 'nearby',
 		perMove: 1,
 		arrows: true,
 		keyboard: 'focus',
 		pauseOnHover: true,
 		waitForTransition: false,
 		height: '15rem'
-	};
+	} as const;
 
 	let colors = [
 		'bg-blue-100 text-blue-800 dark:bg-blue-200',
@@ -57,7 +57,7 @@
 				<SplideSlide>
 					<div class="w-full h-full flex justify-center items-center">
 						<img
-							src={image}
+							data-splide-lazy={image}
 							alt="Product"
 							class={`w-full h-full h-auto ${cover ? 'object-cover' : 'object-scale-down'}`}
 						/>
