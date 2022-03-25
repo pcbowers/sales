@@ -2,6 +2,12 @@ import S from "@sanity/desk-tool/structure-builder"
 import React from "react"
 import documentStore from "part:@sanity/base/datastore/document"
 import { map } from "rxjs/operators"
+import countItems from "./countStructure"
+
+const getCount = async (query, params) => {
+  const count = await client.fetch(`count(*[${query}])`, params)
+  return count + " " + (count === 1 ? "Product" : "Products")
+}
 
 // Get all an array of all tags defined on all 'post' type
 const getProductFilter = (saleId = false, tag = false) =>
@@ -26,8 +32,6 @@ export default (saleId = false) =>
         )
       })
 
-      console.log(uniqueTags)
-
       return S.list()
         .title("Tag")
         .items([
@@ -49,10 +53,20 @@ export default (saleId = false) =>
                 </svg>
               ))
               .child(
-                S.documentTypeList("product")
-                  .title("Product")
-                  .filter(getProductFilter(saleId, true))
-                  .params({ tag: tag.value })
+                countItems(
+                  getProductFilter(saleId, true),
+                  { tag: tag.value },
+                  (count, filter, params) =>
+                    S.documentTypeList("product")
+                      .title(`Product (${count} Total)`)
+                      .filter(filter)
+                      .params(params)
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem("product-template", {
+                          saleId
+                        })
+                      ])
+                )
               )
           })
         ])

@@ -1,7 +1,7 @@
 import S from "@sanity/desk-tool/structure-builder"
 import React from "react"
-
 import tagItems from "./tagStructure"
+import countItems from "./countStructure"
 
 export default () =>
   S.list()
@@ -22,14 +22,21 @@ export default () =>
           S.documentTypeList("sale")
             .title("Sale")
             .child((saleId) =>
-              S.documentTypeList("product")
-                .title("Product")
-                .filter('_type == "product" && sale._ref == $saleId')
-                .params({ saleId })
+              countItems(
+                '_type == "product" && sale._ref == $saleId',
+                { saleId },
+                (count, filter, params) =>
+                  S.documentTypeList("product")
+                    .title(`Product (${count} Total)`)
+                    .filter(filter)
+                    .params(params)
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem("product-template", { saleId })
+                    ])
+              )
             )
         ),
       S.listItem()
-        .title("Products by Tag")
         .icon(() => (
           <svg
             fill="currentColor"
@@ -37,28 +44,13 @@ export default () =>
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              fillRule="evenodd"
+              fill-rule="evenodd"
               d="M4 2a2 2 0 00-2 2v11a3 3 0 106 0V4a2 2 0 00-2-2H4zm1 14a1 1 0 100-2 1 1 0 000 2zm5-1.757l4.9-4.9a2 2 0 000-2.828L13.485 5.1a2 2 0 00-2.828 0L10 5.757v8.486zM16 18H9.071l6-6H16a2 2 0 012 2v2a2 2 0 01-2 2z"
-              clipRule="evenodd"
+              clip-rule="evenodd"
             ></path>
           </svg>
         ))
-        .child(() => tagItems()),
-      S.listItem()
-        .icon(() => (
-          <svg
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-        ))
-        .title("Products by Sale & Tag")
+        .title("Products by Tag")
         .child(
           S.documentTypeList("sale")
             .title("Sale")
@@ -82,9 +74,22 @@ export default () =>
         ))
         .title("Purchased Products")
         .child(
-          S.documentTypeList("product")
-            .title("Product")
-            .filter('_type == "product" && quantity <= totalPurchased')
+          S.documentTypeList("sale")
+            .title("Sale")
+            .child((saleId) =>
+              countItems(
+                '_type == "product" && sale._ref == $saleId && quantity <= totalPurchased',
+                { saleId },
+                (count, filter, params) =>
+                  S.documentTypeList("product")
+                    .title(`Product (${count} Total)`)
+                    .filter(filter)
+                    .params(params)
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem("product-template", { saleId })
+                    ])
+              )
+            )
         ),
       S.listItem()
         .icon(() => (
@@ -102,9 +107,22 @@ export default () =>
         ))
         .title("Available Products")
         .child(
-          S.documentTypeList("product")
-            .title("Product")
-            .filter('_type == "product" && quantity > totalPurchased')
+          S.documentTypeList("sale")
+            .title("Sale")
+            .child((saleId) =>
+              countItems(
+                '_type == "product" && sale._ref == $saleId && quantity > totalPurchased',
+                { saleId },
+                (count, filter, params) =>
+                  S.documentTypeList("product")
+                    .title(`Product (${count} Total)`)
+                    .filter(filter)
+                    .params(params)
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem("product-template", { saleId })
+                    ])
+              )
+            )
         ),
       S.listItem()
         .icon(() => (
@@ -113,15 +131,43 @@ export default () =>
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"></path>
+            <path
+              fillRule="evenodd"
+              d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
+              clipRule="evenodd"
+            ></path>
           </svg>
         ))
         .title("Products Missing Availability")
         .child(
-          S.documentTypeList("product")
-            .title("Product")
-            .filter('_type == "product" && !(tags[].value match "*availab*")')
+          S.documentTypeList("sale")
+            .title("Sale")
+            .child((saleId) =>
+              countItems(
+                '_type == "product" && sale._ref == $saleId && !(tags[].value match "*availab*")',
+                { saleId },
+                (count, filter, params) =>
+                  S.documentTypeList("product")
+                    .title(`Product (${count} Total)`)
+                    .filter(filter)
+                    .params(params)
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem("product-template", { saleId })
+                    ])
+              )
+            )
         ),
       S.divider(),
-      ...S.documentTypeListItems()
+      S.documentTypeListItem("sale").child(
+        countItems('_type == "sale"', {}, (count) =>
+          S.documentTypeList("sale").title(`Sale (${count} Total)`)
+        )
+      ),
+      S.documentTypeListItem("product").child(
+        countItems('_type == "product"', {}, (count) =>
+          S.documentTypeList("product")
+            .title(`Product (${count} Total)`)
+            .initialValueTemplates([S.initialValueTemplateItem("product")])
+        )
+      )
     ])

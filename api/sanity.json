@@ -17,9 +17,7 @@
   ],
   "env": {
     "development": {
-      "plugins": [
-        "@sanity/vision"
-      ]
+      "plugins": ["@sanity/vision"]
     }
   },
   "parts": [
@@ -30,6 +28,10 @@
     {
       "name": "part:@sanity/desk-tool/structure",
       "path": "./parts/deskStructure.js"
+    },
+    {
+      "name": "part:@sanity/base/initial-value-templates",
+      "path": "./parts/initialValueTemplates.js"
     },
     {
       "implements": "part:@sanity/base/brand-logo",
