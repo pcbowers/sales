@@ -63,9 +63,6 @@ const Tags = forwardRef((props, ref) => {
     // since we're populating or repopulating options, make sure to mark loading as true
     setIsLoading(true)
 
-    // populate any preset options
-    setPresetTags((curOptions) => [...curOptions, ...presetOptions])
-
     // if fetch from others is desired
     if (fetchFromOthers) {
       // create a subscription to listen for any changes to others
@@ -74,9 +71,7 @@ const Tags = forwardRef((props, ref) => {
         field: tagsPath
       }).subscribe((allTags) => {
         // as changes occur, update the options with any new tags
-        setPresetTags((curOptions) =>
-          getUniqueTags([...curOptions, ...(allTags || [])])
-        )
+        setPresetTags(getUniqueTags([...presetOptions, ...(allTags || [])]))
 
         // finish loading
         setIsLoading(false)
@@ -84,6 +79,9 @@ const Tags = forwardRef((props, ref) => {
 
       return () => subscription.unsubscribe()
     } else {
+      // populate any preset options
+      setPresetTags(presetOptions)
+
       // since no subscription is loaded, finish loading
       setIsLoading(false)
     }
@@ -138,11 +136,13 @@ const Tags = forwardRef((props, ref) => {
     inputId,
     isMulti: true, // allow multiple tags
     value: selected, // pass values if editing or initial values are set
-    options: presetTags ? presetTags : "", // allows for preset options
+    options: presetTags, // allows for preset options
     onCreateOption: handleCreate, // allow one to change value when creating options
     onChange: handleChange, // handle the change
     isDisabled: readOnly || isLoading // disable if read only or loading
   }
+
+  console.log(selectOptions.options)
 
   return (
     <FormField
