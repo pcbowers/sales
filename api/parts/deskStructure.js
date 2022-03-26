@@ -19,22 +19,26 @@ export default () =>
         ))
         .title("Products by Sale")
         .child(
-          S.documentTypeList("sale")
-            .title("Sale")
-            .child((saleId) =>
-              countItems(
-                '_type == "product" && sale._ref == $saleId',
-                { saleId },
-                (count, filter, params) =>
-                  S.documentTypeList("product")
-                    .title(`Product (${count} Total)`)
-                    .filter(filter)
-                    .params(params)
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem("product-template", { saleId })
-                    ])
+          countItems('_type == "sale"', {}, (count) =>
+            S.documentTypeList("sale")
+              .title(`Sales (${count} Total)`)
+              .child((saleId) =>
+                countItems(
+                  '_type == "product" && sale._ref == $saleId',
+                  { saleId },
+                  (count, filter, params) =>
+                    S.documentTypeList("product")
+                      .title(`Products (${count} Total)`)
+                      .filter(filter)
+                      .params(params)
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem("product-template", {
+                          saleId
+                        })
+                      ])
+                )
               )
-            )
+          )
         ),
       S.listItem()
         .icon(() => (
@@ -52,11 +56,13 @@ export default () =>
         ))
         .title("Products by Tag")
         .child(
-          S.documentTypeList("sale")
-            .title("Sale")
-            .child((saleId) => {
-              return tagItems(saleId)
-            })
+          countItems('_type == "sale"', {}, (count) =>
+            S.documentTypeList("sale")
+              .title(`Sales (${count} Total)`)
+              .child((saleId) => {
+                return tagItems(saleId)
+              })
+          )
         ),
       S.listItem()
         .icon(() => (
@@ -74,22 +80,26 @@ export default () =>
         ))
         .title("Purchased Products")
         .child(
-          S.documentTypeList("sale")
-            .title("Sale")
-            .child((saleId) =>
-              countItems(
-                '_type == "product" && sale._ref == $saleId && quantity <= totalPurchased',
-                { saleId },
-                (count, filter, params) =>
-                  S.documentTypeList("product")
-                    .title(`Product (${count} Total)`)
-                    .filter(filter)
-                    .params(params)
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem("product-template", { saleId })
-                    ])
+          countItems('_type == "sale"', {}, (count) =>
+            S.documentTypeList("sale")
+              .title(`Sales (${count} Total)`)
+              .child((saleId) =>
+                countItems(
+                  '_type == "product" && sale._ref == $saleId && quantity <= totalPurchased',
+                  { saleId },
+                  (count, filter, params) =>
+                    S.documentTypeList("product")
+                      .title(`Products (${count} Total)`)
+                      .filter(filter)
+                      .params(params)
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem("product-template", {
+                          saleId
+                        })
+                      ])
+                )
               )
-            )
+          )
         ),
       S.listItem()
         .icon(() => (
@@ -107,22 +117,26 @@ export default () =>
         ))
         .title("Available Products")
         .child(
-          S.documentTypeList("sale")
-            .title("Sale")
-            .child((saleId) =>
-              countItems(
-                '_type == "product" && sale._ref == $saleId && quantity > totalPurchased',
-                { saleId },
-                (count, filter, params) =>
-                  S.documentTypeList("product")
-                    .title(`Product (${count} Total)`)
-                    .filter(filter)
-                    .params(params)
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem("product-template", { saleId })
-                    ])
+          countItems('_type == "sale"', {}, (count) =>
+            S.documentTypeList("sale")
+              .title(`Sales (${count} Total)`)
+              .child((saleId) =>
+                countItems(
+                  '_type == "product" && sale._ref == $saleId && quantity > totalPurchased',
+                  { saleId },
+                  (count, filter, params) =>
+                    S.documentTypeList("product")
+                      .title(`Products (${count} Total)`)
+                      .filter(filter)
+                      .params(params)
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem("product-template", {
+                          saleId
+                        })
+                      ])
+                )
               )
-            )
+          )
         ),
       S.listItem()
         .icon(() => (
@@ -140,34 +154,42 @@ export default () =>
         ))
         .title("Products Missing Availability")
         .child(
-          S.documentTypeList("sale")
-            .title("Sale")
-            .child((saleId) =>
-              countItems(
-                '_type == "product" && sale._ref == $saleId && !(tags[].value match "*availab*")',
-                { saleId },
-                (count, filter, params) =>
-                  S.documentTypeList("product")
-                    .title(`Product (${count} Total)`)
-                    .filter(filter)
-                    .params(params)
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem("product-template", { saleId })
-                    ])
+          countItems('_type == "sale"', {}, (count) =>
+            S.documentTypeList("sale")
+              .title(`Sales (${count} Total)`)
+              .child((saleId) =>
+                countItems(
+                  '_type == "product" && sale._ref == $saleId && !(tags[].value match "*availab*")',
+                  { saleId },
+                  (count, filter, params) =>
+                    S.documentTypeList("product")
+                      .title(`Products (${count} Total)`)
+                      .filter(filter)
+                      .params(params)
+                      .initialValueTemplates([
+                        S.initialValueTemplateItem("product-template", {
+                          saleId
+                        })
+                      ])
+                )
               )
-            )
+          )
         ),
       S.divider(),
-      S.documentTypeListItem("sale").child(
-        countItems('_type == "sale"', {}, (count) =>
-          S.documentTypeList("sale").title(`Sale (${count} Total)`)
+      S.documentTypeListItem("sale")
+        .title("Sales")
+        .child(
+          countItems('_type == "sale"', {}, (count) =>
+            S.documentTypeList("sale").title(`Sales (${count} Total)`)
+          )
+        ),
+      S.documentTypeListItem("product")
+        .title("Products")
+        .child(
+          countItems('_type == "product"', {}, (count) =>
+            S.documentTypeList("product")
+              .title(`Products (${count} Total)`)
+              .initialValueTemplates([S.initialValueTemplateItem("product")])
+          )
         )
-      ),
-      S.documentTypeListItem("product").child(
-        countItems('_type == "product"', {}, (count) =>
-          S.documentTypeList("product")
-            .title(`Product (${count} Total)`)
-            .initialValueTemplates([S.initialValueTemplateItem("product")])
-        )
-      )
     ])

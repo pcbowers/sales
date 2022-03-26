@@ -33,7 +33,7 @@ export default (saleId = false) =>
       })
 
       return S.list()
-        .title("Tag")
+        .title(`Tags (${uniqueTags.length} Total)`)
         .items([
           ...uniqueTags.map((tag) => {
             return S.listItem()
@@ -58,7 +58,7 @@ export default (saleId = false) =>
                   { tag: tag.value },
                   (count, filter, params) =>
                     S.documentTypeList("product")
-                      .title(`Product (${count} Total)`)
+                      .title(`Products (${count} Total)`)
                       .filter(filter)
                       .params(params)
                       .initialValueTemplates([
