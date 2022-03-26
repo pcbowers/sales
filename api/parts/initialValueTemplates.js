@@ -14,6 +14,8 @@ export default [
           _type: "reference"
         }
 
+      if (parameters.tag) res.tags = [parameters.tag]
+
       return res
     }
   })

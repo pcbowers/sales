@@ -14,20 +14,21 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/base": "^2.29.1",
+    "@reach/auto-id": "^0.16.0",
+    "@sanity/base": "^2.29.2",
     "@sanity/core": "^2.28.1",
-    "@sanity/default-layout": "^2.29.1",
-    "@sanity/default-login": "^2.29.1",
-    "@sanity/desk-tool": "^2.29.1",
+    "@sanity/default-layout": "^2.29.2",
+    "@sanity/default-login": "^2.29.2",
+    "@sanity/desk-tool": "^2.29.2",
     "@sanity/eslint-config-studio": "^2.0.0",
-    "@sanity/vision": "^2.29.1",
+    "@sanity/vision": "^2.29.2",
     "eslint": "^8.6.0",
     "prop-types": "^15.7",
     "react": "^17.0",
+    "react-chess": "^1.1.0",
     "react-dom": "^17.0",
-    "sanity-plugin-autocomplete-tags": "^1.0.2",
+    "react-select": "^5.2.2",
     "sanity-plugin-dark-mode": "^0.0.33",
     "styled-components": "^5.2.0"
-  },
-  "devDependencies": {}
+  }
 }

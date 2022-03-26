@@ -13,7 +13,7 @@
     "@sanity/default-login",
     "@sanity/desk-tool",
     "dark-mode",
-    "autocomplete-tags"
+    "tags"
   ],
   "env": {
     "development": {

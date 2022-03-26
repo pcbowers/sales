@@ -74,7 +74,18 @@ export default {
       name: "tags",
       type: "tags",
       title: "Tags",
-      description: "The tags that this product belongs to"
+      description: "The tags that this product belongs to",
+      options: {
+        tagsPath: "tags",
+        closeMenuOnSelect: false,
+        create: true,
+        fetchFromOthers: true,
+        options: [],
+        onCreate: async (label) => ({
+          label,
+          value: label.toLowerCase().replace(/\W/g, "-")
+        })
+      }
     },
     {
       name: "sale",

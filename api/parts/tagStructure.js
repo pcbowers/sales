@@ -63,7 +63,8 @@ export default (saleId = false) =>
                       .params(params)
                       .initialValueTemplates([
                         S.initialValueTemplateItem("product-template", {
-                          saleId
+                          saleId,
+                          tag
                         })
                       ])
                 )
