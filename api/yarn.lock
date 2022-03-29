@@ -1554,7 +1554,7 @@
     "lodash" "^4.17.15"
     "sanity-diff-patch" "^1.0.9"
 
-"@sanity/form-builder@2.29.2":
+"@sanity/form-builder@^2.29.2", "@sanity/form-builder@2.29.2":
   "integrity" "sha512-mK86G/RblU9D1hxkVBbtGQrRaJPTc6Ii2M+0tcS2XNT+qGGTYkv1RvqqLsHbiDOEvOvlUUdrSTe3nUbvmQ8Qbw=="
   "resolved" "https://registry.npmjs.org/@sanity/form-builder/-/form-builder-2.29.2.tgz"
   "version" "2.29.2"
@@ -1827,7 +1827,7 @@
     "react" "17.0.1"
     "rxjs" "^6.5.3"
 
-"@sanity/ui@^0.37.2":
+"@sanity/ui@^0.37.2", "@sanity/ui@^0.37.5":
   "integrity" "sha512-uP86UTuSiTcbY3udbgqztbrTmCPCUbQjpdJQ68YjWdfnRNYUiMfvpXRu0oYQnBEtUz10hltNoXwxmHZMucjhpA=="
   "resolved" "https://registry.npmjs.org/@sanity/ui/-/ui-0.37.5.tgz"
   "version" "0.37.5"
@@ -9286,6 +9286,15 @@
   "integrity" "sha512-WGptmz++WvBJ9Tjl9701x6k+zR4ppuKlZ8yEVQHt4OoVrQepdryCNZo8z+xdiREYCLZaLQyEuPnIc1CPt2lHoQ=="
   "resolved" "https://registry.npmjs.org/sanity-plugin-dark-mode/-/sanity-plugin-dark-mode-0.0.33.tgz"
   "version" "0.0.33"
+
+"sanity-plugin-tags@^1.1.1":
+  "integrity" "sha512-CA30A9l6gPqAZny8SOpP0g7meFKUnSfFK5d1+hJGIBgfATZEms0d2U3mMFqNUj+4/kC84xa3rXqsvpsZ/3h1GA=="
+  "resolved" "https://registry.npmjs.org/sanity-plugin-tags/-/sanity-plugin-tags-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "@reach/auto-id" "^0.16.0"
+    "@sanity/ui" "^0.37.5"
+    "react-select" "^5.2.2"
 
 "sax@~1.2.4":
   "integrity" "sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw=="

@@ -27,11 +27,11 @@
     },
     {
       "name": "part:@sanity/desk-tool/structure",
-      "path": "./parts/deskStructure.js"
+      "path": "./parts/deskStructure"
     },
     {
       "name": "part:@sanity/base/initial-value-templates",
-      "path": "./parts/initialValueTemplates.js"
+      "path": "./parts/initialValueTemplates"
     },
     {
       "implements": "part:@sanity/base/brand-logo",
@@ -39,7 +39,7 @@
     },
     {
       "name": "part:@sanity/base/new-document-structure",
-      "path": "./parts/newDocumentStructure.js"
+      "path": "./parts/newDocumentStructure"
     }
   ]
 }

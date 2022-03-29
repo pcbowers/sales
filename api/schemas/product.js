@@ -76,15 +76,19 @@ export default {
       title: "Tags",
       description: "The tags that this product belongs to",
       options: {
-        tagsPath: "tags",
-        closeMenuOnSelect: false,
-        create: true,
-        fetchFromOthers: true,
-        options: [],
+        predefinedTags: [],
+        includeFromReference: false,
+        includeFromRelated: "tags",
+        customLabel: "label",
+        customValue: "value",
+        allowCreate: true,
         onCreate: async (label) => ({
           label,
           value: label.toLowerCase().replace(/\W/g, "-")
-        })
+        }),
+        reactSelectOptions: {
+          closeMenuOnSelect: false
+        }
       }
     },
     {
