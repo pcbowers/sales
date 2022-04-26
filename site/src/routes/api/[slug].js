@@ -34,8 +34,6 @@ export async function get({ params, url }) {
 
 		if (start < 1) start = 1;
 
-		console.log(totalProductQuery(tags));
-
 		const total = await client.fetch(totalProductQuery(tags), {
 			sale: slug,
 			search: `*${search}*`

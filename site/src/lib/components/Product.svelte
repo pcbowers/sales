@@ -5,6 +5,7 @@
 	export let currency;
 	export let email;
 	export let saleName;
+
 	let cover = true;
 
 	const options = {
@@ -103,7 +104,7 @@
 			href={`mailto:${email}?subject=${encodeURI(`${saleName} | ${product.name}`)}&body=${encodeURI(
 				`Hello,\n\nI am interested in purchasing the following product:\n\nName: ${
 					product.name
-				}\nID: ${product._id}\nTags: ${product.tags
+				}\nID: ${product._id}\nTags: ${(product.tags || ['N/A'])
 					.map((tag) => tag.label)
 					.join(', ')}\nPrice: ${new Intl.NumberFormat('en-US', {
 					style: 'currency',
